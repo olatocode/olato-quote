@@ -2,8 +2,8 @@
 
 const express = require('express');
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 
 // Create an array of quotes for each category
 const quotes = {
@@ -24,9 +24,10 @@ const quotes = {
   ],
 };
 
+// Base url for Homepage
 app.get('/', (req, res) => {
   res.send({
-    Quote: '<h1>Welcome to Olato Quotes!</h1>',
+    Home: 'Welcome to Olato Quotes!',
   });
 });
 
