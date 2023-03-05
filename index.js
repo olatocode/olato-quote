@@ -24,6 +24,12 @@ const quotes = {
   ],
 };
 
+app.get('/', (req, res) => {
+  res.send({
+    Quote: '<h1></h1>Welcome to Olato Quotes!</h1>',
+  });
+});
+
 // Set up an API route that accepts a category parameter and returns a random quote from that category
 app.get('/quotes/:category', (req, res) => {
   const category = req.params.category;
