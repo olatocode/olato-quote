@@ -26,7 +26,7 @@ const quotes = {
 
 app.get('/', (req, res) => {
   res.send({
-    Quote: '<h1></h1>Welcome to Olato Quotes!</h1>',
+    Quote: '<h1>Welcome to Olato Quotes!</h1>',
   });
 });
 
