@@ -1,15 +1,16 @@
 import dotenv from 'dotenv';
+
 dotenv.config();
 
-import express from 'express';
 import cors from 'cors';
+import express from 'express';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import connectDB from './config/db';
-import quotesRouter from './routes/quotes';
-import categoriesRouter from './routes/categories';
 import swaggerDocument, { swaggerUiOptions } from './config/swagger';
-import { ApiResponse } from './types';
+import categoriesRouter from './routes/categories';
+import quotesRouter from './routes/quotes';
+import type { ApiResponse } from './types';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,7 +19,7 @@ app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
 
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   const response: ApiResponse<{ status: string }> = {
     data: { status: 'ok' },
     status: 'ok',
@@ -27,7 +28,7 @@ app.get('/health', (req, res) => {
   res.json(response);
 });
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   const response: ApiResponse<{ name: string; version: string }> = {
     data: { name: 'Olato Quote API', version: '1.0.0' },
     status: 'ok',

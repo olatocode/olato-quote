@@ -1,7 +1,7 @@
-import mongoose, { Document, Schema } from 'mongoose';
-import { IQuote } from '../types';
+import mongoose, { type Document, Schema } from 'mongoose';
+import type { IQuoteWithDedupKey } from '../types';
 
-export interface IQuoteDocument extends IQuote, Document {}
+export interface IQuoteDocument extends IQuoteWithDedupKey, Document {}
 
 const QuoteSchema = new Schema<IQuoteDocument>({
   text: {
@@ -20,9 +20,26 @@ const QuoteSchema = new Schema<IQuoteDocument>({
     lowercase: true,
     trim: true,
   },
+  source: {
+    type: String,
+    trim: true,
+  },
+  sourceUrl: {
+    type: String,
+    trim: true,
+  },
+  license: {
+    type: String,
+    trim: true,
+  },
+  dedupKey: {
+    type: String,
+    select: false,
+  },
 });
 
 QuoteSchema.index({ category: 1 });
+QuoteSchema.index({ dedupKey: 1 }, { unique: true, partialFilterExpression: { dedupKey: { $type: 'string' } } });
 
 const Quote = mongoose.model<IQuoteDocument>('Quote', QuoteSchema);
 

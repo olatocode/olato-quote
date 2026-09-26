@@ -7,7 +7,12 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "seed": "tsx src/seed.ts",
+    "seed:upsert": "tsx src/seed.ts --upsert",
+    "seed:reset": "tsx src/seed.ts --reset",
+    "ingest": "tsx src/ingest.ts",
+    "lint": "biome check",
+    "format": "biome check --write",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tobi Awosola",
@@ -22,6 +27,7 @@
     "tsx": "^4.23.13"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.5.14",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",

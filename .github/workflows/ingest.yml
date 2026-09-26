@@ -1,0 +1,47 @@
+name: Ingest quotes
+
+on:
+  schedule:
+    - cron: '17 6 1 * *'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Maximum number of new quotes to accept'
+        required: false
+        default: '50'
+      dry_run:
+        description: 'Report what would be ingested without writing'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ingestion
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          INGEST_USER_AGENT: ${{ secrets.INGEST_USER_AGENT }}
+        run: >
+          npm run ingest --
+          ${{ inputs.dry_run == 'true' && '--dry-run' || '' }}
+          ${{ inputs.limit && format('--limit {0}', inputs.limit) || '' }}

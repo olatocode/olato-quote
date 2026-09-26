@@ -150,6 +150,21 @@ const swaggerDocument = {
             type: 'string',
             example: 'motivation',
           },
+          source: {
+            type: 'string',
+            description: 'Where the quote was acquired from. Absent on the original seeded quotes.',
+            example: 'Wikiquote',
+          },
+          sourceUrl: {
+            type: 'string',
+            description: 'Link to the page the quote was acquired from.',
+            example: 'https://en.wikiquote.org/wiki/Motivation',
+          },
+          license: {
+            type: 'string',
+            description: 'Licence the source publishes the quote under.',
+            example: 'CC BY-SA 3.0',
+          },
         },
       },
       Category: {
